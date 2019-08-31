@@ -36,8 +36,7 @@ buffer* init(int size) {
 // end of the front end of the buffer.
 void move_cursor_forward(buffer *buf) {
     printf("==========AFTER MOVING FORWARD=========\n");
-    printf("%d\t%d\n", buf->cursor_start, buf->cursor_end);
-    printf("%c\t%d\n", (*buf->cursor_start), buf->cursor_start);
+    printf("CS: %d\tCE: %d\n", buf->cursor_start, buf->cursor_end);
 
     char *pointer = buf->cursor_end +1;
     char temp = *buf->cursor_start;
@@ -47,7 +46,6 @@ void move_cursor_forward(buffer *buf) {
     buf->cursor_end++;
 
     printf("%c\t%d\t%s\n", (*buf->cursor_start), buf->cursor_start, buf->arr);
-
     buff_print(buf);
 }
 
@@ -56,8 +54,7 @@ void move_cursor_forward(buffer *buf) {
 // beginning of the rear end of the buffer.
 void move_cursor_backward(buffer *buf) {
     printf("==========AFTER MOVING BACKWARD=========\n");
-    printf("%d\t%d\n", buf->cursor_start, buf->cursor_end);
-    printf("%c\t%d\n", (*buf->cursor_start), buf->cursor_start);
+    printf("CS: %d\tCE: %d\n", buf->cursor_start, buf->cursor_end);
 
     char *pointer = buf->cursor_start -1;
     char temp = *buf->cursor_end;
@@ -77,17 +74,14 @@ void insert_str(buffer *buf, char *str) {
     printf("==========AFTER INSERTING STRING=========\n");
     for(int i=0; i<strlen(str); i++) {
         printf("run #%d\n", i);
-        insert_char(buf, str[i]);
+        *buf->cursor_start++ = str[i];
+        if(buf->cursor_start == buf->cursor_end) {
+            resize(buf);
+        } else {
+            printf("STILL NOT EQ; CS: %d\tCE: %d\n", buf->cursor_start, buf->cursor_end);
+        }
     }
-    printf("INSERT BUFF SIZE: %d GAP SIZE: %d\n", buf->size, buf->gap_size);
-}
-
-void insert_char(buffer *buf, char c) {
-    if(buf->cursor_start == buf->cursor_end) {
-        resize(buf);
-    }
-    *buf->cursor_start++ = c;
-    printf("char at cursor: %d\t  char input: %c\t array: %s\n", buf->cursor_start, c, buf->arr);
+    printf("\nINSERT BUFF SIZE: %d GAP SIZE: %d\n", buf->size, buf->gap_size);
 }
 
 void buff_print(buffer *buf) {
