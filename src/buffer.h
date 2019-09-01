@@ -15,8 +15,12 @@ buffer* init(int size);
 
 void insert_str(buffer* buf, char *str);
 
+void delete_buffer(buffer* buf);
+
 void move_cursor_forward(buffer *buf);
 
 void move_cursor_backward(buffer *buf);
+
+void resize(buffer *buf);
 
 #endif

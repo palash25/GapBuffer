@@ -113,6 +113,11 @@ void resize(buffer *buf) {
     }
 }
 
+// Deletes the character array and other contents of the buffer struct
+void delete_buffer(buffer* buf) {
+    free(buf->arr);
+    free(buf);
+}
 
 void buff_print(buffer *buf) {
     for(int i=0; i<buf->size; i++) {
