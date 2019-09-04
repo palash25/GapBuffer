@@ -5,23 +5,24 @@
 #include "buffer.h"
 
 /*
-* Gap Buffer is a simple character array with an empty space
-* between two chunks of characters that acts as a cursor and
-* allows for fast inserts and deletes. A Gap Buffer (say of size 6)
-* when initialized will have the following structure:
-*
-* +---+---+---+---+---+---+
-* | X | X | X | X | X | X |
-* +---+---+---+---+---+---+
-*
-* X's represents the locations occupied by the cursor, which during
-* initialization is the whole buffer.
-*/
-buffer* init(int size) {
+ * Gap Buffer is a simple character array with an empty space
+ * between two chunks of characters that acts as a cursor and
+ * allows for fast inserts and deletes. A Gap Buffer (say of size 6)
+ * when initialized will have the following structure:
+ *
+ * +---+---+---+---+---+---+
+ * | X | X | X | X | X | X |
+ * +---+---+---+---+---+---+
+ *
+ * X's represents the locations occupied by the cursor, which during
+ * initialization is the whole buffer.
+ */
+buffer* init(int size)
+{
     buffer* buf = malloc(sizeof(buffer));
     buf->size = size;
     buf->arr = (char*)calloc((size_t)buf->size, sizeof(char));
-    // initially the cursor spreads over the entirity of the buffer
+    /* initially the cursor spreads over the entirity of the buffer */
     buf->gap_size = size;
     buf->cursor_start = &buf->arr[0];
     buf->cursor_end = &buf->arr[buf->size - 1];
@@ -29,10 +30,12 @@ buffer* init(int size) {
     return buf;
 }
 
-// moves the cursor one location forward and copies
-// character at the beginning of the rear end to the
-// end of the front end of the buffer.
-void move_cursor_forward(buffer *buf) {
+/* moves the cursor one location forward and copies
+ * character at the beginning of the rear end to the
+ * end of the front end of the buffer.
+ */
+void move_cursor_forward(buffer *buf)
+{
     char *pointer = buf->cursor_end +1;
     char temp = *buf->cursor_start;
     *buf->cursor_start = *pointer;
@@ -41,10 +44,12 @@ void move_cursor_forward(buffer *buf) {
     buf->cursor_end++;
 }
 
-// moves the cursor one location backward and copies
-// character at the end of the front end to the
-// beginning of the rear end of the buffer.
-void move_cursor_backward(buffer *buf) {
+/* moves the cursor one location backward and copies
+ * character at the end of the front end to the
+ * beginning of the rear end of the buffer.
+ */
+void move_cursor_backward(buffer *buf)
+{
     char *pointer = buf->cursor_start -1;
     char temp = *buf->cursor_end;
     *buf->cursor_end = *pointer;
@@ -54,8 +59,9 @@ void move_cursor_backward(buffer *buf) {
 }
 
 
-// inserts a string at the start pos of the cursor.
-void insert_str(buffer *buf, char *str) {
+/* inserts a string at the start pos of the cursor. */
+void insert_str(buffer *buf, char *str)
+{
     for(int i=0; i<strlen(str); i++) {
         *buf->cursor_start = str[i];
         buf->cursor_start++;
@@ -65,8 +71,9 @@ void insert_str(buffer *buf, char *str) {
     }
 }
 
-// insert a gap twice the size of the previous gap at the cursor.
-void resize(buffer *buf) {
+/* insert a gap twice the size of the previous gap at the cursor. */
+void resize(buffer *buf)
+{
     int *res = realloc(buf->arr, (buf->gap_size * 2) * sizeof(char));
     if(res) {
         buf->gap_size *= 2;
@@ -80,8 +87,9 @@ void resize(buffer *buf) {
     }
 }
 
-// deletes the character array and other contents of the buffer struct
-void delete_buffer(buffer* buf) {
+/* deletes the character array and other contents of the buffer struct */
+void delete_buffer(buffer* buf)
+{
     free(buf->arr);
     free(buf);
 }
