@@ -62,7 +62,8 @@ void move_cursor_backward(buffer *buf)
 /* inserts a string at the start pos of the cursor. */
 void insert_str(buffer *buf, char *str)
 {
-    for(int i=0; i<strlen(str); i++) {
+    size_t length = strlen(str);
+    for(int i=0; i<length; i++) {
         *buf->cursor_start = str[i];
         buf->cursor_start++;
         if(buf->cursor_start > buf->cursor_end) {

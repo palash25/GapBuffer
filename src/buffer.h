@@ -1,10 +1,11 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
+#include <stdio.h>
 typedef struct {
     char *arr;
-    int size; /* total size of the buffer */
-    int gap_size; /* size of the gap */
+    size_t size; /* total size of the buffer */
+    size_t gap_size; /* size of the gap */
     char *cursor_start; /* starting pos of the gap */
     char *cursor_end; /* ending pos of the gap */
 } buffer;
