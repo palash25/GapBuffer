@@ -19,9 +19,16 @@
  */
 buffer* init(int size)
 {
-    buffer *buf = malloc(sizeof(buffer));
+    buffer *buf;
+    if ( (buf = (buffer*)malloc(sizeof(buffer))) == NULL )
+        return NULL;
+
     buf->size = size;
-    buf->arr = (char*)calloc((size_t)buf->size, sizeof(char));
+    /* size of char is always 1, no matter the architecture */
+    if ( (buf->arr = (char*)calloc(buf->size, 1)) == NULL ) {
+        free(buf);
+        return NULL;
+    }
     /* initially the cursor spreads over the entirity of the buffer */
     buf->gap_size = size;
     buf->cursor_start = &buf->arr[0];
