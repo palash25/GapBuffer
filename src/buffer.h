@@ -12,9 +12,9 @@ typedef struct {
 
 buffer* init(int size);
 
-void insert_str(buffer* buf, char *str);
+void insert_str(buffer *buf, char *str);
 
-void delete_buffer(buffer* buf);
+void delete_buffer(buffer *buf);
 
 void move_cursor_forward(buffer *buf);
 

@@ -19,7 +19,7 @@
  */
 buffer* init(int size)
 {
-    buffer* buf = malloc(sizeof(buffer));
+    buffer *buf = malloc(sizeof(buffer));
     buf->size = size;
     buf->arr = (char*)calloc((size_t)buf->size, sizeof(char));
     /* initially the cursor spreads over the entirity of the buffer */
@@ -89,7 +89,7 @@ void insert_str(buffer *buf, char *str)
 }
 
 /* deletes the character array and other contents of the buffer struct */
-void delete_buffer(buffer* buf)
+void delete_buffer(buffer *buf)
 {
     free(buf->arr);
     free(buf);
