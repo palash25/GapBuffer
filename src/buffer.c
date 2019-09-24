@@ -30,6 +30,22 @@ buffer* init(int size)
     return buf;
 }
 
+/* insert a gap twice the size of the previous gap at the cursor. */
+static void resize(buffer *buf)
+{
+    int *res = realloc(buf->arr, (buf->gap_size * 2) * sizeof(char));
+    if(res) {
+        buf->gap_size *= 2;
+        buf->size += buf->gap_size;
+        buf->cursor_start++;
+        buf->cursor_end = &buf->arr[(buf->size - 1)];
+        return;
+    } else {
+        fprintf(stderr, "ERROR: realloc failed");
+        return;
+    }
+}
+
 /* moves the cursor one location forward and copies
  * character at the beginning of the rear end to the
  * end of the front end of the buffer.
@@ -69,22 +85,6 @@ void insert_str(buffer *buf, char *str)
         if(buf->cursor_start > buf->cursor_end) {
             resize(buf);
         }
-    }
-}
-
-/* insert a gap twice the size of the previous gap at the cursor. */
-void resize(buffer *buf)
-{
-    int *res = realloc(buf->arr, (buf->gap_size * 2) * sizeof(char));
-    if(res) {
-        buf->gap_size *= 2;
-        buf->size += buf->gap_size;
-        buf->cursor_start++;
-        buf->cursor_end = &buf->arr[(buf->size - 1)];
-        return;
-    } else {
-        fprintf(stderr, "ERROR: realloc failed");
-        return;
     }
 }
 
