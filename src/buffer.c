@@ -31,7 +31,7 @@ buffer* init(int size)
     }
     /* initially the cursor spreads over the entirity of the buffer */
     buf->gap_size = size;
-    buf->cursor_start = &buf->arr[0];
+    buf->cursor_start = &buf->arr;
     buf->cursor_end = &buf->arr[buf->size - 1];
 
     return buf;
